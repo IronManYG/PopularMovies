@@ -28,7 +28,7 @@ public final class NetworkUtils {
 
     private static final String MOVIE_POSTER_BASE_URL = "http://image.tmdb.org/t/p";
 
-    private static  String MOVIE_POSTER_SIZE = "w185";
+    private static final   String MOVIE_POSTER_SIZE = "w185";
 
     private static  String MOVIE_POSTER_PATH_FROM_QUERY = "";
 
@@ -52,6 +52,30 @@ public final class NetworkUtils {
         }
 
         Log.v(TAG, "Built URI " + url);
+
+        return url;
+    }
+
+    /**
+     * Builds the URL used to get movie Poster jpg.
+     *
+     * @return The URL that displays movie Poster jpg.
+     */
+
+    public static URL buildMoviePosterUrl() {
+        Uri builtUri = Uri.parse(MOVIE_POSTER_BASE_URL).buildUpon()
+                .appendPath(MOVIE_POSTER_SIZE)
+                .appendPath(MOVIE_POSTER_PATH_FROM_QUERY)
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        Log.v(TAG, "Built Poster URI " + url);
 
         return url;
     }
