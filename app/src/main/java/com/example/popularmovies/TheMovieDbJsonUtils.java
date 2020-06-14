@@ -6,6 +6,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Utility functions to handle TheMovieDb JSON data.
  */
@@ -19,11 +22,9 @@ public class TheMovieDbJsonUtils {
      * @param movieJsonStr JSON response from server
      *
      * @return Array of Strings describing movies data
-     *
-     * @throws JSONException If JSON data cannot be properly parsed
      */
 
-    public static String[] getMoviesInfoStringsFromJson(Context context, String movieJsonStr) throws JSONException
+    public static Movie parseMoviesInfoStringsFromJson(String movieJsonStr)
     {
         /*Movies information. Each movie's details info is an element of the "results" array*/
         final String TMD_RESULTS = "results";
@@ -40,16 +41,14 @@ public class TheMovieDbJsonUtils {
 
         final String TMD_RELEASE_DATE = "release_date";
 
-        /* String array to hold each movie's String */
-        String[] parsedMovieData = null;
+        try {
+             JSONObject moviesListJson = new JSONObject(movieJsonStr);
+             JSONArray resultsArray = moviesListJson.getJSONArray(TMD_RESULTS);
 
-        JSONObject movieJson = new JSONObject(movieJsonStr);
 
-        JSONArray movieArray = movieJson.getJSONArray(TMD_RESULTS);
-
-        parsedMovieData = new String[movieArray.length()];
-
-        return parsedMovieData;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 }
