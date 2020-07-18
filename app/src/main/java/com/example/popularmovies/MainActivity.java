@@ -30,5 +30,11 @@ public class MainActivity extends AppCompatActivity {
                 = new GridLayoutManager(this, 2,GridLayoutManager.VERTICAL,false);
 
         mRecyclerView.setLayoutManager(layoutManager);
+
+        /*
+         * Use this setting to improve performance if you know that changes in content do not
+         * change the child layout size in the RecyclerView
+         */
+        mRecyclerView.setHasFixedSize(true);
     }
 }
