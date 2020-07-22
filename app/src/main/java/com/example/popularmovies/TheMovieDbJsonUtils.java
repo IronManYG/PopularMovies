@@ -13,7 +13,6 @@ import java.util.List;
  * Utility functions to handle TheMovieDb JSON data.
  */
 public class TheMovieDbJsonUtils {
-
     /**
      * This method parses JSON from a web response and returns an array of Strings
      * describing movies .
@@ -26,6 +25,7 @@ public class TheMovieDbJsonUtils {
 
     public static Movie parseMoviesInfoStringsFromJson(String movieJsonStr)
     {
+        /*TMD mean themoviedb*/
         /*Movies information. Each movie's details info is an element of the "results" array*/
         final String TMD_RESULTS = "results";
 
@@ -44,11 +44,20 @@ public class TheMovieDbJsonUtils {
         try {
              JSONObject moviesListJson = new JSONObject(movieJsonStr);
              JSONArray resultsArray = moviesListJson.getJSONArray(TMD_RESULTS);
-
+             for(int i = 0 ; i < resultsArray.length(); i++)
+             {
+                 JSONObject movieDetails = resultsArray.getJSONObject(i);
+                 String title = movieDetails.getString(TMD_TITLE);
+                 String posterPath = movieDetails.getString(TMD_POSTER_PATH);
+                 String voteAverage = movieDetails.getString(TMD_VOTE_AVERAGE);
+                 String overView = movieDetails.getString(TMD_OVERVIEW);
+                 String releaseDate = movieDetails.getString(TMD_RELEASE_DATE);
+                 return new Movie(title, posterPath, voteAverage, overView, releaseDate);
+             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return null;
     }
-
 }
