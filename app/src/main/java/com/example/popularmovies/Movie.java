@@ -13,13 +13,14 @@ public class Movie {
      */
     public Movie() {}
 
-    public Movie(String title, String posterPath, String voteAverage, String overView, String releaseDate)
+    public Movie(String movieData)
     {
-        this.title = title;
-        this.posterPath = posterPath;
-        this.voteAverage = voteAverage;
-        this.overView = overView;
-        this.releaseDate = releaseDate;
+        String[] movieDetail = movieData.split("-_-");
+        title = movieDetail[0];
+        posterPath = movieDetail[1];
+        voteAverage = movieDetail[2];
+        overView = movieDetail[3];
+        releaseDate = movieDetail[4];
     }
 
     public String getTitle() {return title;}
