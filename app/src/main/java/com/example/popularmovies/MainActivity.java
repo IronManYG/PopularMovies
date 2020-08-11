@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
      *
      * @param moviePoster The Poster of movie that was clicked
      */
+    @SuppressWarnings("rawtypes")
     @Override
     public void onClick(String moviePoster) {
         Context context = this;
