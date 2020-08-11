@@ -22,7 +22,7 @@ public final class NetworkUtils {
 
     /**
      *  You will need to create your own personal API key to make app get data form.
-     *  Make account in "https://www.themoviedb.org/settings/api"  vits "https://www.themoviedb.org/settings/api" to get API kay.
+     *  Make account in "https://www.themoviedb.org/settings/api"  visit "https://www.themoviedb.org/settings/api" to get API kay.
      */
     private static final String API_KEY = "";
 
