@@ -50,11 +50,11 @@ public class TheMovieDbJsonUtils {
              for(int i = 0 ; i < resultsArray.length(); i++)
              {
                  JSONObject movieDetails = resultsArray.getJSONObject(i);
-                 String title = movieDetails.getString(TMD_TITLE);
-                 String posterPath = movieDetails.getString(TMD_POSTER_PATH);
-                 String voteAverage = movieDetails.getString(TMD_VOTE_AVERAGE);
-                 String overView = movieDetails.getString(TMD_OVERVIEW);
-                 String releaseDate = movieDetails.getString(TMD_RELEASE_DATE);
+                 String title = movieDetails.optString(TMD_TITLE);
+                 String posterPath = movieDetails.optString(TMD_POSTER_PATH);
+                 String voteAverage = movieDetails.optString(TMD_VOTE_AVERAGE);
+                 String overView = movieDetails.optString(TMD_OVERVIEW);
+                 String releaseDate = movieDetails.optString(TMD_RELEASE_DATE);
                  parsedMovieData[i] = title + "-_-" + posterPath + "-_-" + voteAverage + "-_-" + overView + "-_-" + releaseDate;
              }
 
