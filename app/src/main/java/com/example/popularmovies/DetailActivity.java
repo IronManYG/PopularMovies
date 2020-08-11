@@ -25,8 +25,6 @@ public class DetailActivity extends AppCompatActivity {
 
     private TextView mOverview;
 
-    private Button mFavorite;
-
     private ImageView mMoviePoster;
 
     private Movie mMovie;
@@ -50,7 +48,7 @@ public class DetailActivity extends AppCompatActivity {
 
         mOverview = findViewById(R.id.overview);
 
-        mFavorite = findViewById(R.id.favorite_button);
+        Button mFavorite = findViewById(R.id.favorite_button);
 
         mMoviePoster = findViewById(R.id.movie_poster);
 

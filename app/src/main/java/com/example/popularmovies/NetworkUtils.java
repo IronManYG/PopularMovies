@@ -30,8 +30,6 @@ public final class NetworkUtils {
 
     private static final   String MOVIE_POSTER_SIZE = "w500";
 
-    private static  String MOVIE_POSTER_PATH_FROM_QUERY;
-
     /**
      * Builds the URL used to talk to the themoviedb servers.
      *
@@ -63,10 +61,9 @@ public final class NetworkUtils {
      */
 
     public static URL buildMoviePosterUrl(String posterPath) {
-        MOVIE_POSTER_PATH_FROM_QUERY = posterPath;
         Uri builtUri = Uri.parse(MOVIE_POSTER_BASE_URL).buildUpon()
                 .appendPath(MOVIE_POSTER_SIZE)
-                .appendEncodedPath(MOVIE_POSTER_PATH_FROM_QUERY)
+                .appendEncodedPath(posterPath)
                 .build();
 
         URL url = null;
