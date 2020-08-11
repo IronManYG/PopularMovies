@@ -5,4 +5,14 @@
     <string name="error_message">
         An error has occurred. Please try again by clicking REFRESH
     </string>
+    <string name="sort_by">Sort By</string>
+    <string name="overview">Overview</string>
+    <string name="release_date">2020/09/17</string>
+    <string name="vote_average">10</string>
+    <string name="mark_as_favorite">Mark As Favorite</string>
+    <string name="movie_title">Movie Title</string>
+    <string name="detail_error_message">Movie data not available</string>
+    <string name="vote_rate">/10</string>
+    <string name="most_popular">Most Popular</string>
+    <string name="top_rated">Top Rated</string>
 </resources>
