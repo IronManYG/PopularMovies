@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
 
 
 
+    @SuppressLint("StaticFieldLeak")
     public class FetchMovieTask extends AsyncTask<Void , Void, String[]> {
 
         @Override
