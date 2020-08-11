@@ -5,12 +5,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-
+    <!--This ImageView holds the movie_sort data for one particular movie_sort in the list-->
     <ImageView
         android:id="@+id/movie_pic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:srcCompat="@tools:sample/avatars"
-        android:padding="4dp"
-        android:contentDescription="@string/movie_poster" />
+        android:contentDescription="@string/movie_poster"
+        tools:srcCompat="@tools:sample/avatars" />
 </LinearLayout>
