@@ -1,8 +1,10 @@
 package com.example.popularmovies;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -11,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+
+import java.util.Objects;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -29,6 +33,7 @@ public class DetailActivity extends AppCompatActivity {
     private Movie mMovie;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +41,7 @@ public class DetailActivity extends AppCompatActivity {
 
         this.setTitle("MovieDetail");
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mMovieTitle = findViewById(R.id.movie_title);
@@ -54,22 +59,15 @@ public class DetailActivity extends AppCompatActivity {
             closeOnError();
         }
 
+        assert intent != null;
         String mMovieDetail = intent.getStringExtra(EXTRA_STRING);
         if (mMovieDetail == null) {
             // EXTRA_STRING not found in intent
             closeOnError();
             return;
         }
-
         mMovie = new Movie(mMovieDetail);
-        if (mMovie == null) {
-            // Movie data unavailable
-            closeOnError();
-            return;
-        }
-
         populateUI();
-
     }
 
     @Override
