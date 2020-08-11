@@ -2,11 +2,11 @@ package com.example.popularmovies;
 
 public class Movie {
 
-    private String title;
-    private String posterPath;
-    private String voteAverage;
-    private String overView;
-    private String releaseDate;
+    private final String title;
+    private final String posterPath;
+    private final String voteAverage;
+    private final String overView;
+    private final String releaseDate;
 
     public Movie(String movieData)
     {
