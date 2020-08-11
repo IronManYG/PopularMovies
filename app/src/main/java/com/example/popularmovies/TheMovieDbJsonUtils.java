@@ -6,9 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Utility functions to handle TheMovieDb JSON data.
  */
@@ -18,9 +15,9 @@ public class TheMovieDbJsonUtils {
      * describing movies .
      * <p/>
      *
-     * @param movieJsonStr JSON response from server
+     * @param movieJsonStr JSON response from server.
      *
-     * @return Array of Strings describing movies data
+     * @return Array of Strings describing movies data.
      */
 
     public static String[] parseMoviesInfoStringsFromJson(Context context, String movieJsonStr)

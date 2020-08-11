@@ -20,11 +20,11 @@ public final class NetworkUtils {
 
     private static final String KEY_PARAM = "api_key";
 
+    /**
+     *  You will need to create your own personal API key to make app get data form.
+     *  Make account in "https://www.themoviedb.org/settings/api"  vits "https://www.themoviedb.org/settings/api" to get API kay.
+     */
     private static final String API_KEY = "";
-
-    private static final String TOP_RATED_MOVIES = "top_rated";
-
-    private static final String POPULAR_MOVIES = "popular";
 
     private static final String MOVIE_POSTER_BASE_URL = "https://image.tmdb.org/t/p";
 

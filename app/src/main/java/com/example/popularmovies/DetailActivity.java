@@ -1,9 +1,7 @@
 package com.example.popularmovies;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -89,11 +87,17 @@ public class DetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * This method will make the error message visible.
+     */
     private void closeOnError() {
         finish();
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * This method will Publish movie detail in ui.
+     */
     private void populateUI() {
         String UriPosterPath = String.valueOf(NetworkUtils.buildMoviePosterUrl(mMovie.getPosterPath()));
 

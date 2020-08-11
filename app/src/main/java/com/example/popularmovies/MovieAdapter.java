@@ -1,7 +1,6 @@
 package com.example.popularmovies;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,17 +20,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
 
     private Movie mMovie;
 
-    /*
-     * An on-click handler that we've defined to make it easy for an Activity to interface with
-     * our RecyclerView
-     */
     private final MovieAdapterOnClickHandler mClickHandler;
 
     /**
      * The interface that receives onClick messages.
      */
     public interface MovieAdapterOnClickHandler {
-        void onClick(String weatherForDay);
+        void onClick(String moviePoster);
     }
 
     /**
@@ -92,7 +87,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
 
     /**
      * OnBindViewHolder is called by the RecyclerView to display the data at the specified
-     * position. In this method, we update the contents of the ViewHolder to display the weather
+     * position. In this method, we update the contents of the ViewHolder to display the movie
      * details for this particular position, using the "position" argument that is conveniently
      * passed into us.
      *
@@ -105,7 +100,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         String posterPath = mMovieData[position];
         mMovie = new Movie(posterPath);
         String UriPosterPath = String.valueOf(NetworkUtils.buildMoviePosterUrl(mMovie.getPosterPath()));
-        Log.i("Movie Adapter", "The Path : " + UriPosterPath);
         Picasso.get().load(UriPosterPath).into(movieAdapterViewHolder.mMovieImageView);
     }
 
@@ -122,11 +116,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     }
 
     /**
-     * This method is used to set the weather forecast on a ForecastAdapter if we've already
+     * This method is used to set the movie list on a MovieAdapter if we've already
      * created one. This is handy when we get new data from the web but don't want to create a
-     * new ForecastAdapter to display it.
+     * new MovieAdapter to display it.
      *
-     * @param MovieData The new weather data to be displayed.
+     * @param MovieData The new movie data to be displayed.
      */
     public void setMovieData(String[] MovieData) {
         mMovieData = MovieData;
