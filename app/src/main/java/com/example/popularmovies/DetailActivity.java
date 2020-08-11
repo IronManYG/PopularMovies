@@ -48,8 +48,6 @@ public class DetailActivity extends AppCompatActivity {
 
         mOverview = findViewById(R.id.overview);
 
-        Button mFavorite = findViewById(R.id.favorite_button);
-
         mMoviePoster = findViewById(R.id.movie_poster);
 
         Intent intent = getIntent();

@@ -1,7 +1,5 @@
 package com.example.popularmovies;
 
-import android.content.Context;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,7 +18,7 @@ public class TheMovieDbJsonUtils {
      * @return Array of Strings describing movies data.
      */
 
-    public static String[] parseMoviesInfoStringsFromJson(Context context, String movieJsonStr)
+    public static String[] parseMoviesInfoStringsFromJson(String movieJsonStr)
     {
         /*TMD mean themoviedb*/
         /*Movies information. Each movie_sort's details info is an element of the "results" array*/
