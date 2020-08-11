@@ -16,7 +16,7 @@ import java.util.Scanner;
 public final class NetworkUtils {
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
-    private static final String MOVIES_BASE_URL = "http://api.themoviedb.org/3/movie";
+    private static final String MOVIES_BASE_URL = "https://api.themoviedb.org/3/movie";
 
     private static final String KEY_PARAM = "api_key";
 
@@ -26,11 +26,11 @@ public final class NetworkUtils {
 
     private static final String POPULAR_MOVIES = "popular";
 
-    private static final String MOVIE_POSTER_BASE_URL = "http://image.tmdb.org/t/p";
+    private static final String MOVIE_POSTER_BASE_URL = "https://image.tmdb.org/t/p";
 
-    private static final   String MOVIE_POSTER_SIZE = "w185";
+    private static final   String MOVIE_POSTER_SIZE = "w500";
 
-    private static  String MOVIE_POSTER_PATH_FROM_QUERY = "";
+    private static  String MOVIE_POSTER_PATH_FROM_QUERY;
 
     /**
      * Builds the URL used to talk to the themoviedb servers.
@@ -38,9 +38,9 @@ public final class NetworkUtils {
      * @return The URL to use to query the themoviedb servers.
      */
 
-    public static URL buildUrl() {
+    public static URL buildUrl(String sort_by) {
         Uri builtUri = Uri.parse(MOVIES_BASE_URL).buildUpon()
-                .appendPath(TOP_RATED_MOVIES)
+                .appendPath(sort_by)
                 .appendQueryParameter(KEY_PARAM, API_KEY)
                 .build();
 
@@ -57,15 +57,16 @@ public final class NetworkUtils {
     }
 
     /**
-     * Builds the URL used to get movie Poster jpg.
+     * Builds the URL used to get movie_sort Poster jpg.
      *
-     * @return The URL that displays movie Poster jpg.
+     * @return The URL that displays movie_sort Poster jpg.
      */
 
-    public static URL buildMoviePosterUrl() {
+    public static URL buildMoviePosterUrl(String posterPath) {
+        MOVIE_POSTER_PATH_FROM_QUERY = posterPath;
         Uri builtUri = Uri.parse(MOVIE_POSTER_BASE_URL).buildUpon()
                 .appendPath(MOVIE_POSTER_SIZE)
-                .appendPath(MOVIE_POSTER_PATH_FROM_QUERY)
+                .appendEncodedPath(MOVIE_POSTER_PATH_FROM_QUERY)
                 .build();
 
         URL url = null;
