@@ -3,7 +3,7 @@
     <string name="movie_poster">MOVIE POSTER</string>
 
     <string name="error_message">
-        An error has occurred. Please try again by clicking REFRESH
+        An error has occurred. Please try again After connecting the internet
     </string>
     <string name="sort_by">Sort By</string>
     <string name="overview">Overview</string>
