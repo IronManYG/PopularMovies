@@ -37,7 +37,7 @@ public class TheMovieDbJsonUtils {
         final String TMD_RELEASE_DATE = "release_date";
 
         /* String array to hold each Movie String */
-        String[] parsedMovieData = null;
+        String[] parsedMovieData;
 
         try {
              JSONObject moviesListJson = new JSONObject(movieJsonStr);
