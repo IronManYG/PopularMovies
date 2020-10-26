@@ -36,6 +36,9 @@ public class TheMovieDbJsonUtils {
 
         final String TMD_RELEASE_DATE = "release_date";
 
+        /*movie id */
+        final String TMD_ID = "id";
+
         /* String array to hold each Movie String */
         String[] parsedMovieData;
 
@@ -53,7 +56,8 @@ public class TheMovieDbJsonUtils {
                  String voteAverage = movieDetails.optString(TMD_VOTE_AVERAGE);
                  String overView = movieDetails.optString(TMD_OVERVIEW);
                  String releaseDate = movieDetails.optString(TMD_RELEASE_DATE);
-                 parsedMovieData[i] = title + "-_-" + posterPath + "-_-" + voteAverage + "-_-" + overView + "-_-" + releaseDate;
+                 String id = movieDetails.optString(TMD_ID);
+                 parsedMovieData[i] = title + "-_-" + posterPath + "-_-" + voteAverage + "-_-" + overView + "-_-" + releaseDate + "-_-" + id;
              }
 
             return parsedMovieData;
