@@ -26,6 +26,10 @@ public final class NetworkUtils {
      */
     private static final String API_KEY = "";
 
+    private static final String LANGUAGE_PARAM = "language";
+
+    private static final String LANGUAGE_KEY = "en-US";
+
     private static final String MOVIE_POSTER_BASE_URL = "https://image.tmdb.org/t/p";
 
     private static final   String MOVIE_POSTER_SIZE = "w500";
@@ -77,6 +81,33 @@ public final class NetworkUtils {
 
         return url;
     }
+
+    /**
+     * Builds the URL used to get movie_sort Poster jpg.
+     *
+     * @return The URL that displays movie_sort Poster jpg.
+     */
+
+    public static URL buildMovieTrailersUrl(String movieId) {
+        Uri builtUri = Uri.parse(MOVIE_POSTER_BASE_URL).buildUpon()
+                .appendEncodedPath(movieId)
+                .appendPath("videos")
+                .appendQueryParameter(KEY_PARAM, API_KEY)
+                .appendQueryParameter(LANGUAGE_PARAM, LANGUAGE_KEY)
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        Log.v(TAG, "Built Trailers URI " + url);
+
+        return url;
+    }
+
 
     /**
      * This method returns the entire result from the HTTP response.
