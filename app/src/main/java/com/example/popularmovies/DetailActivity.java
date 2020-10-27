@@ -2,21 +2,28 @@ package com.example.popularmovies;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.net.URL;
 import java.util.Objects;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements TrailersMovieAdapter.MovieAdapterOnClickHandler {
 
     public static final String EXTRA_STRING = "extra_string";
 
@@ -31,6 +38,12 @@ public class DetailActivity extends AppCompatActivity {
     private ImageView mMoviePoster;
 
     private Movie mMovie;
+
+    private RecyclerView mRecyclerView;
+
+    private TrailersMovieAdapter mTrailersMovieAdapter;
+
+    private String mSortBy = "top_rated";
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -54,6 +67,16 @@ public class DetailActivity extends AppCompatActivity {
 
         mMoviePoster = findViewById(R.id.movie_poster);
 
+        mRecyclerView = findViewById(R.id.recyclerview_movie_trailers);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
+
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        mTrailersMovieAdapter = new TrailersMovieAdapter(this);
+
+        mRecyclerView.setAdapter(mTrailersMovieAdapter);
+
         Intent intent = getIntent();
         if (intent == null) {
             closeOnError();
@@ -68,6 +91,15 @@ public class DetailActivity extends AppCompatActivity {
         }
         mMovie = new Movie(mMovieDetail);
         populateUI();
+
+        loadMovieData();
+    }
+
+    /**
+     * This method will tell some background method to get the movie data in the background.
+     */
+    private void loadMovieData() {
+       new FetchMovieTask().execute();
     }
 
     @Override
@@ -111,5 +143,55 @@ public class DetailActivity extends AppCompatActivity {
         Log.i(mTag, "Overview : " + mMovie.getOverView());
 
     }
+
+    @Override
+    public void onClick(String movieTrailer) {
+
+        MovieTrailer mMovieTrailer = new MovieTrailer(movieTrailer);
+
+        String youtube = "https://youtu.be/";
+        String trailerLink = youtube + mMovieTrailer.getKey();
+
+
+        Uri trailerWebPage = Uri.parse(trailerLink);
+        Intent intent = new Intent(Intent.ACTION_VIEW, trailerWebPage);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public class FetchMovieTask extends AsyncTask<Void , Void, String[]> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String[] doInBackground(Void... voids) {
+
+            URL movieTrailerRequestUrl = NetworkUtils.buildMovieTrailersUrl(mMovie.getId());
+
+            try {
+                String jsonMovieTrailerResponse = NetworkUtils.getResponseFromHttpUrl(movieTrailerRequestUrl);
+
+                return TheMovieDbJsonUtils.parseMoviesTrailersInfoStringsFromJson(jsonMovieTrailerResponse);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String[] MovieData) {
+            if (MovieData != null) {
+                mTrailersMovieAdapter.setMovieData(MovieData);
+            }
+        }
+    }
+
 }
 
