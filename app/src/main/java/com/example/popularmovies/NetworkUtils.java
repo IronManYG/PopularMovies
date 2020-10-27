@@ -89,7 +89,7 @@ public final class NetworkUtils {
      */
 
     public static URL buildMovieTrailersUrl(String movieId) {
-        Uri builtUri = Uri.parse(MOVIE_POSTER_BASE_URL).buildUpon()
+        Uri builtUri = Uri.parse(MOVIES_BASE_URL).buildUpon()
                 .appendEncodedPath(movieId)
                 .appendPath("videos")
                 .appendQueryParameter(KEY_PARAM, API_KEY)
