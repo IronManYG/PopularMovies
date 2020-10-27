@@ -67,4 +67,54 @@ public class TheMovieDbJsonUtils {
         }
         return null;
     }
+
+    /**
+     * This method parses JSON from a web response and returns an array of Strings
+     * describing movies trailers .
+     * <p/>
+     *
+     * @param movieTrailerJsonStr JSON response from server.
+     *
+     * @return Array of Strings describing movies trailers data.
+     */
+
+    public static String[] parseMoviesTrailersInfoStringsFromJson(String movieTrailerJsonStr)
+    {
+        /*Movies information. Each movie_sort's details info is an element of the "results" array*/
+        final String TRAILER_RESULTS = "results";
+
+        /*the trailer key returned by the query*/
+        final String TRAILER_KEY = "key";
+
+        /*the trailer name returned by the query*/
+        final String TRAILER_NAME = "name";
+
+        /*trailer type */
+        final String TRAILER_TYPE = "type";
+
+        /* String array to hold each Movie String */
+        String[] parsedMovieData;
+
+        try {
+            JSONObject moviesListJson = new JSONObject(movieTrailerJsonStr);
+            JSONArray resultsArray = moviesListJson.getJSONArray(TRAILER_RESULTS);
+
+            parsedMovieData = new  String[resultsArray.length()];
+
+            for(int i = 0 ; i < resultsArray.length(); i++)
+            {
+                JSONObject movieTrailerDetails = resultsArray.getJSONObject(i);
+                String key = movieTrailerDetails.optString(TRAILER_KEY);
+                String name = movieTrailerDetails.optString(TRAILER_NAME);
+                String type = movieTrailerDetails.optString(TRAILER_TYPE);
+                parsedMovieData[i] = key + "-_-" + name + "-_-" + type;
+            }
+
+            return parsedMovieData;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
