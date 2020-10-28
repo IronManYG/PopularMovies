@@ -10,10 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * {@link TrailersMovieAdapter} exposes a list of Movie details to a
+ * {@link ReviewMovieAdapter} exposes a list of Movie details to a
  * {@link RecyclerView}
  */
-public class TrailersMovieAdapter extends RecyclerView.Adapter<TrailersMovieAdapter.MovieAdapterViewHolder> {
+public class ReviewMovieAdapter extends RecyclerView.Adapter<ReviewMovieAdapter.MovieAdapterViewHolder> {
 
     private String[] mMovieData;
 
@@ -32,19 +32,21 @@ public class TrailersMovieAdapter extends RecyclerView.Adapter<TrailersMovieAdap
      * @param clickHandler The on-click handler for this adapter. This single handler is called
      *                     when an item is clicked.
      */
-    public TrailersMovieAdapter(MovieAdapterOnClickHandler clickHandler) {
+    public ReviewMovieAdapter(MovieAdapterOnClickHandler clickHandler) {
         mClickHandler = clickHandler;
     }
 
     /**
-     * Cache of the children views for a movie_sort list item.
+     * Cache of the children views for a review list item.
      */
     public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public final TextView mMovieTrailer;
+        public final TextView mReviewContent;
+        public final TextView mReviewAuthor;
 
         public MovieAdapterViewHolder(View view) {
             super(view);
-            mMovieTrailer = view.findViewById(R.id.trailer);
+            mReviewContent = view.findViewById(R.id.review_content);
+            mReviewAuthor = view.findViewById(R.id.review_author);
             view.setOnClickListener(this);
         }
 
@@ -75,7 +77,7 @@ public class TrailersMovieAdapter extends RecyclerView.Adapter<TrailersMovieAdap
     @Override
     public MovieAdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         Context context = viewGroup.getContext();
-        int layoutIdForListItem = R.layout.trailer_list_item;
+        int layoutIdForListItem = R.layout.review_list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View view = inflater.inflate(layoutIdForListItem, viewGroup, false);
@@ -96,11 +98,15 @@ public class TrailersMovieAdapter extends RecyclerView.Adapter<TrailersMovieAdap
     public void onBindViewHolder(MovieAdapterViewHolder movieAdapterViewHolder, int position) {
         String moviePath = mMovieData[position];
 
-        MovieTrailer mMovieTrailer = new MovieTrailer(moviePath);
+        MovieReview mMovieReview = new MovieReview(moviePath);
 
-        String trailerType = String.valueOf(mMovieTrailer.getType());
+        String reviewAuthor = String.valueOf(mMovieReview.getAuthor());
 
-        movieAdapterViewHolder.mMovieTrailer.setText(trailerType);
+        String reviewContent = String.valueOf(mMovieReview.getContent());
+
+        movieAdapterViewHolder.mReviewAuthor.setText(reviewAuthor);
+
+        movieAdapterViewHolder.mReviewContent.setText(reviewContent);
     }
 
     /**

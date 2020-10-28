@@ -13,7 +13,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +22,7 @@ import com.squareup.picasso.Picasso;
 import java.net.URL;
 import java.util.Objects;
 
-public class DetailActivity extends AppCompatActivity implements TrailersMovieAdapter.MovieAdapterOnClickHandler {
+public class DetailActivity extends AppCompatActivity implements TrailersMovieAdapter.MovieAdapterOnClickHandler, ReviewMovieAdapter.MovieAdapterOnClickHandler{
 
     public static final String EXTRA_STRING = "extra_string";
 
@@ -39,9 +38,13 @@ public class DetailActivity extends AppCompatActivity implements TrailersMovieAd
 
     private Movie mMovie;
 
-    private RecyclerView mRecyclerView;
+    private RecyclerView mTrailerRecyclerView;
+
+    private RecyclerView mReviewRecyclerView;
 
     private TrailersMovieAdapter mTrailersMovieAdapter;
+
+    private ReviewMovieAdapter mReviewMovieAdapter;
 
     private String mSortBy = "top_rated";
 
@@ -67,15 +70,28 @@ public class DetailActivity extends AppCompatActivity implements TrailersMovieAd
 
         mMoviePoster = findViewById(R.id.movie_poster);
 
-        mRecyclerView = findViewById(R.id.recyclerview_movie_trailers);
+        LinearLayoutManager trailerLayoutManager = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
+        // Trailer
+        mTrailerRecyclerView = findViewById(R.id.recyclerview_movie_trailers);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
-
-        mRecyclerView.setLayoutManager(layoutManager);
+        mTrailerRecyclerView.setLayoutManager(trailerLayoutManager);
 
         mTrailersMovieAdapter = new TrailersMovieAdapter(this);
 
-        mRecyclerView.setAdapter(mTrailersMovieAdapter);
+        mTrailerRecyclerView.setAdapter(mTrailersMovieAdapter);
+
+        LinearLayoutManager reviewLayoutManager = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
+        // Review
+        mReviewRecyclerView = findViewById(R.id.recyclerview_movie_review);
+
+        mReviewRecyclerView.setLayoutManager(reviewLayoutManager);
+
+        mReviewMovieAdapter = new ReviewMovieAdapter(this);
+
+        mReviewRecyclerView.setAdapter(mReviewMovieAdapter);
+
+
+
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -99,7 +115,8 @@ public class DetailActivity extends AppCompatActivity implements TrailersMovieAd
      * This method will tell some background method to get the movie data in the background.
      */
     private void loadMovieData() {
-       new FetchMovieTask().execute();
+        new FetchMovieReviewTask().execute();
+        new FetchMovieTrailerTask().execute();
     }
 
     @Override
@@ -162,7 +179,7 @@ public class DetailActivity extends AppCompatActivity implements TrailersMovieAd
     }
 
     @SuppressLint("StaticFieldLeak")
-    public class FetchMovieTask extends AsyncTask<Void , Void, String[]> {
+    public class FetchMovieTrailerTask extends AsyncTask<Void , Void, String[]> {
 
         @Override
         protected void onPreExecute() {
@@ -189,6 +206,38 @@ public class DetailActivity extends AppCompatActivity implements TrailersMovieAd
         protected void onPostExecute(String[] MovieData) {
             if (MovieData != null) {
                 mTrailersMovieAdapter.setMovieData(MovieData);
+            }
+        }
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public class FetchMovieReviewTask extends AsyncTask<Void , Void, String[]> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String[] doInBackground(Void... voids) {
+
+            URL movieReviewRequestUrl = NetworkUtils.buildMovieReviewUrl(mMovie.getId());
+
+            try {
+                String jsonMovieReviewResponse = NetworkUtils.getResponseFromHttpUrl(movieReviewRequestUrl);
+
+                return TheMovieDbJsonUtils.parseMoviesReviewInfoStringsFromJson(jsonMovieReviewResponse);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String[] MovieData) {
+            if (MovieData != null) {
+                mReviewMovieAdapter.setMovieData(MovieData);
             }
         }
     }

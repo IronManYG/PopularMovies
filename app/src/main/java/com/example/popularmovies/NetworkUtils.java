@@ -83,9 +83,9 @@ public final class NetworkUtils {
     }
 
     /**
-     * Builds the URL used to get movie_sort Poster jpg.
+     * Builds the URL used to get movie trailers.
      *
-     * @return The URL that displays movie_sort Poster jpg.
+     * @return The URL that displays movie trailers.
      */
 
     public static URL buildMovieTrailersUrl(String movieId) {
@@ -104,6 +104,32 @@ public final class NetworkUtils {
         }
 
         Log.v(TAG, "Built Trailers URI " + url);
+
+        return url;
+    }
+
+    /**
+     * Builds the URL used to get movie review.
+     *
+     * @return The URL that displays movie review.
+     */
+
+    public static URL buildMovieReviewUrl(String movieId) {
+        Uri builtUri = Uri.parse(MOVIES_BASE_URL).buildUpon()
+                .appendEncodedPath(movieId)
+                .appendPath("reviews")
+                .appendQueryParameter(KEY_PARAM, API_KEY)
+                .appendQueryParameter(LANGUAGE_PARAM, LANGUAGE_KEY)
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        Log.v(TAG, "Built Review URI " + url);
 
         return url;
     }

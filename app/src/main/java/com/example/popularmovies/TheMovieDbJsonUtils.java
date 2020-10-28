@@ -70,7 +70,7 @@ public class TheMovieDbJsonUtils {
 
     /**
      * This method parses JSON from a web response and returns an array of Strings
-     * describing movies trailers .
+     * describing movies trailers data.
      * <p/>
      *
      * @param movieTrailerJsonStr JSON response from server.
@@ -117,4 +117,55 @@ public class TheMovieDbJsonUtils {
         }
         return null;
     }
+
+    /**
+     * This method parses JSON from a web response and returns an array of Strings
+     * describing movies review data.
+     * <p/>
+     *
+     * @param movieReviewJsonStr JSON response from server.
+     *
+     * @return Array of Strings describing movies review data.
+     */
+
+    public static String[] parseMoviesReviewInfoStringsFromJson(String movieReviewJsonStr)
+    {
+        /*Movies information. Each movie_sort's details info is an element of the "results" array*/
+        final String TRAILER_RESULTS = "results";
+
+        /*the review author returned by the query*/
+        final String REVIEW_AUTHOR = "author";
+
+        /*the review content by the query*/
+        final String REVIEW_CONTENT = "content";
+
+        /*review is */
+        final String REVIEW_ID = "id";
+
+        /* String array to hold each Movie String */
+        String[] parsedMovieData;
+
+        try {
+            JSONObject moviesListJson = new JSONObject(movieReviewJsonStr);
+            JSONArray resultsArray = moviesListJson.getJSONArray(TRAILER_RESULTS);
+
+            parsedMovieData = new  String[resultsArray.length()];
+
+            for(int i = 0 ; i < resultsArray.length(); i++)
+            {
+                JSONObject movieTrailerDetails = resultsArray.getJSONObject(i);
+                String author = movieTrailerDetails.optString(REVIEW_AUTHOR);
+                String content = movieTrailerDetails.optString(REVIEW_CONTENT);
+                String id = movieTrailerDetails.optString(REVIEW_ID);
+                parsedMovieData[i] = author + "-_-" + content + "-_-" + id;
+            }
+
+            return parsedMovieData;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
