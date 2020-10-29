@@ -23,7 +23,7 @@ public class ReviewMovieAdapter extends RecyclerView.Adapter<ReviewMovieAdapter.
      * The interface that receives onClick messages.
      */
     public interface MovieAdapterOnClickHandler {
-        void onClick(String movieTrailer);
+        void onClick(String movieData);
     }
 
     /**

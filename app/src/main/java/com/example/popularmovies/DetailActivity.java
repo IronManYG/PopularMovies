@@ -162,15 +162,14 @@ public class DetailActivity extends AppCompatActivity implements TrailersMovieAd
     }
 
     @Override
-    public void onClick(String movieTrailer) {
+    public void onClick(String movieData) {
 
-        MovieTrailer mMovieTrailer = new MovieTrailer(movieTrailer);
-
+        MovieTrailer mMovieTrailer = new MovieTrailer(movieData);
         String youtube = "https://youtu.be/";
-        String trailerLink = youtube + mMovieTrailer.getKey();
+        String trailerKey = youtube + mMovieTrailer.getKey();
 
 
-        Uri trailerWebPage = Uri.parse(trailerLink);
+        Uri trailerWebPage = Uri.parse(trailerKey);
         Intent intent = new Intent(Intent.ACTION_VIEW, trailerWebPage);
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
